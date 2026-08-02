@@ -1,0 +1,30 @@
+goat_lims/
+│
+├── app.py 
+│
+├── routes/
+│   ├── dashboard.py  
+│   ├── patients.py
+│   ├── tests.py
+│   ├── reports.py
+│   ├── billing.py
+│   ├── auth.py
+│   └── inventory.py
+│
+├── services/
+│   ├── patient_service.py
+│   ├── report_service.py
+│   ├── billing_service.py
+│   └── auth_service.py
+│
+├── repositories/
+│   ├── patient_repository.py
+│   ├── report_repository.py
+│   └── billing_repository.py
+│
+├── database/
+│   └── db.py
+│
+├── templates/
+├── static/
+└── config.py

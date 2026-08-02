@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OPERON MEDICORE</title>
+    <!-- Importing a clean, modern font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="/static/css/style.css" />
+    {%block link%} {%endblock%}
+  </head>
+  <body>
+    <nav class="side-nav1">
+      <header class="company-info">
+        <div class="company-name">
+          <i class="fa-solid fa-leaf" style="margin-right: 8px"></i>MEDI CORE
+        </div>
+        <div class="operon-name">Operon Solutions</div>
+      </header>
+
+      <div class="traveling-section">
+        <a href="{{ url_for('main.dashboard') }}">
+          <div
+            class="trav-el {% if active_page == 'dashboard' %}active{% endif %}"
+          >
+            <i class="fa-solid fa-chart-pie"></i> Dashboard
+          </div>
+        </a>
+        <!-- <a href="{{ url_for('diagnose') }}"> -->
+        <div
+          class="trav-el {% if active_page == 'diagnose' %}active{% endif %}"
+        >
+          <i class="fa-solid fa-vial"></i> Diagnose
+        </div>
+        <!-- </a> -->
+        <!-- <a href="{{ url_for('collectionDetails') }}"> -->
+        <div
+          class="trav-el {% if active_page == 'collectionDetails' %}active{% endif %}"
+        >
+          <i class="fa-solid fa-truck-medical"></i> Collection
+        </div>
+        <!-- </a> -->
+        <!-- <a href="{{ url_for('settings') }}"> -->
+        <div
+          class="trav-el {% if active_page == 'settings' %}active{% endif %}"
+        >
+          <i class="fa-solid fa-gear"></i> Settings
+        </div>
+        <!-- </a> -->
+      </div>
+
+      <div class="auth-detials">
+        <div class="user-avatar">AD</div>
+        <div class="user-info">
+          <span class="user-name">Admin User</span>
+          <span class="user-role">Lab Manager</span>
+        </div>
+      </div>
+    </nav>
+
+    <section class="main-section" id="mainSection">
+      {% block content %}
+      <!-- Child templates will inject their content here -->
+      {% endblock %}
+    </section>
+
+    <script>
+      // --- Navigation Logic ---
+      function setActiveNav(element) {
+        // Remove active class from all
+        document.querySelectorAll(".trav-el").forEach((el) => {
+          el.classList.remove("active");
+        });
+        // Add active class to clicked
+        element.querySelector(".trav-el").classList.add("active");
+      }
+    </script>
+  </body>
+</html>
