@@ -369,14 +369,18 @@ body {
 }
 .value-row input,
 .value-row .static-text {
-  font-size: 1.05em;
+  font-size: 1em;
   font-weight: 700;
   color: var(--primary-main);
   border: none;
-  background: transparent;
+  background: rgb(210, 238, 210);
+  padding: 0.5em;
+  border-radius: 1em;
   outline: none;
-  padding: 0;
+  height: 1.5em;
   width: 10em;
+  align-items: center;
+  vertical-align: center;
 }
 .value-row .static-text.black-text {
   color: var(--text-main);

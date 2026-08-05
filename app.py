@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from dotenv import load_dotenv
 import os
-from psycopg2 import Binary
+from psycopg import Binary
 import sys
 
 print(sys.executable)

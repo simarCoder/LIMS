@@ -111,7 +111,7 @@
             <div class="info-text">
               <span class="label">PATIENT ID</span>
               <div class="value-row">
-                <input type="text" value="PT-2025-0715" readonly name="patientId"/>
+                <input type="text" value="P1" name="patientId"/>
                 <i class="fa-regular fa-copy copy-icon"></i>
               </div>
             </div>
@@ -156,6 +156,8 @@
           <!-- LEFT COLUMN -->
           <div class="form-panel">
             <div class="form-flex">
+              
+              
               <div class="input-group honor-title">
                 <label>HONORIFIC TITLE <span class="req">*</span></label>
                 <div class="input-wrapper select-wrapper">
@@ -196,7 +198,7 @@
                     name="patientAge"
                   />
                   <div class="divider"></div>
-                  <select id="ageSelection" name="ageType">
+                  <select id="ageSelection" name="patientAgeType">
                     <option>Years</option>
                     <option>Months</option>
                   </select>
@@ -215,11 +217,11 @@
                     required
                     name="patientAge"
                   />
-                  <div class="divider"></div>
-                  <select id="ageSelection" name="ageType">
+                  <!-- <div class="divider"></div>
+                  <select id="ageSelection" name="patientAgeType" >
                     <option>Years</option>
                     <option>Months</option>
-                  </select>
+                  </select> -->
                 </div>
               </div>
 
@@ -267,7 +269,7 @@
                 <label>ADDRESS <span class="req">*</span></label>
                 <div class="input-wrapper textarea-wrapper">
                   <i class="fa-solid fa-location-dot leading-icon"></i>
-                  <textarea placeholder="Enter full address"></textarea>
+                  <textarea placeholder="Enter full address" name="patientAddress"></textarea>
                 </div>
               </div>
             </div>
@@ -422,14 +424,14 @@
           </div>
         </div>
 
-        <div class="security-note">
+        <!-- <div class="security-note">
           <i class="fa-solid fa-lock"></i> All patient information is secure and
           confidential
           <i
             class="fa-solid fa-leaf"
             style="color: #a2bbae; font-size: 0.85em"
           ></i>
-        </div>
+        </div> -->
       </form>
     </div>
 
