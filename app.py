@@ -28,7 +28,7 @@ app.register_blueprint(reg_routes)
 
 @app.route("/")
 def home():
-    return render_template("base.html")
+    return redirect(url_for('main.dashboard'))
 
 # @app.route("/registration")
 # def registration():

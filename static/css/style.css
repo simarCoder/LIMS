@@ -936,3 +936,84 @@ body {
 .search-box:focus {
   background: white;
 }
+
+/* =========================================================
+   NAVIGATION LINK FIXES
+   ========================================================= */
+/* Target the links wrapping the nav items to prevent default browser styling */
+.traveling-section a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* Ensure link wrappers do not interfere with the active state colors */
+.traveling-section a:active,
+.traveling-section a:visited {
+  color: inherit;
+}
+
+/* Fix margin collapse when elements are wrapped in anchors */
+.traveling-section a .trav-el {
+  margin: 4px 12px;
+}
+
+/* =========================================================
+   PATIENT DATA TABLE STYLES
+   ========================================================= */
+.patient-list {
+  margin-top: 32px;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm); /* Utilizing existing variables */
+  border: 1px solid var(--border-color);
+}
+
+.patient-list h2 {
+  color: var(--primary-dark);
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.vanilla-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.vanilla-table th {
+  background-color: var(--bg-panel);
+  color: var(--text-muted);
+  font-weight: 700;
+  padding: 14px 16px;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  border-bottom: 2px solid var(--border-color);
+  letter-spacing: 0.5px;
+}
+
+.vanilla-table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-main);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.vanilla-table tr {
+  transition: background-color var(--transition-speed) ease;
+}
+
+.vanilla-table tr:hover {
+  background-color: #f0f7f3; /* Matches the sidebar hover state */
+}
+
+/* Handles empty table states cleanly */
+.vanilla-table td[colspan="4"] {
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 32px;
+}

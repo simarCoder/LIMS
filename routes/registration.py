@@ -9,6 +9,7 @@ def register_patient():
     data = {
         "title" : request.form.get("honorificTitle"),
         "p_id" : request.form.get("patientId"),
+        "machine_id": request.form.get("machineId"),
         "p_name" : request.form.get("patientName"),
         "p_age" : request.form.get("patientAge"),
         "p_age_type" : request.form.get("patientAgeType"),

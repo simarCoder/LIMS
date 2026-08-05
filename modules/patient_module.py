@@ -11,6 +11,7 @@ def add_patient(data):
             cursor.execute("""
                             INSERT INTO patients(
                                 patient_id,
+                                machine_id,
                                 honorific_title,
                                 patient_name,
                                 patient_age,
@@ -19,9 +20,10 @@ def add_patient(data):
                                 patient_phone,
                                 patient_email,
                                 patient_address
-                            ) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)
+                            ) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
                            """, (
                                data["p_id"],
+                               data["machine_id"],
                                data["title"],
                                data["p_name"],
                                data["p_age"],
@@ -33,3 +35,21 @@ def add_patient(data):
                                  ))
             
             print("executed successfully")
+            
+
+# ====== IMPLEMENTING TO GET THE PATIENT INFO IN NEXT FUNCTION ======         
+def get_all_patients():
+    with get_connection() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+                SELECT patient_id, honorific_title, patient_name, 
+                       patient_age, patient_age_type, patient_gender, patient_phone
+                FROM patients 
+                ORDER BY patient_id DESC
+            """)
+            
+            # Convert rows to dictionaries so they are easy to use in Jinja2 HTML templates
+            columns = [col.name for col in cursor.description]
+            patients = [dict(zip(columns, row)) for row in cursor.fetchall()]
+            
+            return patients
