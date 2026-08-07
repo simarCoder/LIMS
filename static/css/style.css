@@ -300,7 +300,7 @@ body {
 }
 
 .modal-header-custom {
-  padding: 2.5em 3em 1em;
+  padding: 1em 1em 1em;
   display: grid;
   grid-template-columns: 1fr auto; /* 2 distinct columns */
   gap: 1.5em;

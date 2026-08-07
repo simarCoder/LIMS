@@ -1,0 +1,491 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Laboratory Dashboard</h1>
+    <p
+      style="
+        color: var(--text-muted);
+        margin-top: 4px;
+        font-size: 0.9rem;
+        font-weight: 500;
+      "
+    >
+      Overview of lab operations and samples.
+    </p>
+  </div>
+  <button class="btn btn-primary" onclick="openRegistrationModal()">
+    <i class="fa-solid fa-user-plus"></i> Register Patient
+  </button>
+</div>
+
+<div class="stats-grid">
+  <div class="card stat-card">
+    <div class="stat-header">
+      <div>
+        <div class="stat-title">TOTAL SAMPLES</div>
+        <div class="stat-value">{{ patients|length }}</div>
+        <!-- Dynamic count based on read data -->
+      </div>
+      <div class="stat-icon icon-blue">
+        <i class="fa-solid fa-vials"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add a new table here to display the Read data -->
+<div class="patient-list">
+  <h2>Recent Registrations</h2>
+  <table class="vanilla-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Machine Id</th>
+        <th>Date Registered</th>
+        <th>Name</th>
+        <th>Age/Gender</th>
+        <th>Phone</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for patient in patients %}
+      <tr>
+        <td>{{ patient.patient_id }}</td>
+        <td>{{patient.machine_id}}</td>
+        <td>{{patient.patient_created_at.strftime("%d %b %Y, %I:%M %p")}}</td>
+        <td>{{ patient.honorific_title }} {{ patient.patient_name }}</td>
+        <td>
+          {{ patient.patient_age }} {{ patient.patient_age_type }} / {{
+          patient.patient_gender }}
+        </td>
+        <td>{{ patient.patient_phone }}</td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="4">No patients registered yet.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div
+  class="modal-overlay"
+  id="regModalOverlay"
+  onclick="closeRegistrationModal()"
+></div>
+<div class="modal-container" id="regModalContainer">
+  <button
+    class="close-modal-btn"
+    type="button"
+    onclick="closeRegistrationModal()"
+  >
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+
+  <!-- Grid Header -->
+  <div class="modal-header-custom">
+    <!-- <div class="header-right">
+      <div class="info-card">
+        <div class="icon-box green"><i class="fa-regular fa-user"></i></div>
+        <div class="info-text">
+          <span class="label">PATIENT ID</span>
+          <div class="value-row">
+            <input type="text" value="P1" name="patientId" />
+            <i class="fa-regular fa-copy copy-icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="icon-box brown">
+          <i class="fa-solid fa-desktop"></i>
+        </div>
+        <div class="info-text">
+          <span class="label">MACHINE TEST ID</span>
+          <div class="value-row">
+            <input type="text" value="MT-2025-000983" readonly />
+            <i class="fa-regular fa-copy copy-icon"></i>
+          </div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="icon-box outline">
+          <i class="fa-regular fa-calendar"></i>
+        </div>
+        <div class="info-text">
+          <span class="label">DATE & TIME</span>
+          <div class="value-row">
+            <div class="static-text black-text">02 Aug 2025 • 04:29 PM</div>
+            <i
+              class="fa-solid fa-chevron-down"
+              style="font-size: 0.85em; color: #8ba396; margin-left: 0.5em"
+            ></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+    <!-- Move the form tag up to wrap the header AND the body -->
+    <form
+      style="display: flex; flex-direction: column; overflow: hidden; flex: 1"
+      action="{{url_for('reg.register_patient')}}"
+      method="POST"
+    >
+      <!-- Grid Header (Now inside the form!) -->
+      <div class="modal-header-custom">
+        <div class="header-center">
+          <h2>REGISTER PATIENT</h2>
+          <p>Fill in the patient details to create a new record</p>
+        </div>
+
+        <div class="header-right">
+          <div class="info-card">
+            <div class="icon-box green"><i class="fa-regular fa-user"></i></div>
+            <div class="info-text">
+              <span class="label">PATIENT ID</span>
+              <div class="value-row">
+                <!-- Ensure name="patientId" is here and make it readonly if auto-generated -->
+                <input type="text" name="patientId" />
+                <i class="fa-regular fa-copy copy-icon"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="icon-box brown">
+              <i class="fa-solid fa-desktop"></i>
+            </div>
+            <div class="info-text">
+              <span class="label">MACHINE TEST ID</span>
+              <div class="value-row">
+                <!-- Added name="machineId" -->
+                <input type="text" name="machineId" />
+                <i class="fa-regular fa-copy copy-icon"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="icon-box outline">
+              <i class="fa-regular fa-calendar"></i>
+            </div>
+            <div class="info-text">
+              <span class="label">DATE & TIME</span>
+              <div class="value-row">
+                <!-- Keep your original visual text -->
+                <div class="static-text black-text">02 Aug 2025 • 04:29 PM</div>
+                <i
+                  class="fa-solid fa-chevron-down"
+                  style="font-size: 0.85em; color: #8ba396; margin-left: 0.5em"
+                ></i>
+
+                <!-- Hidden input added to actually submit the date data -->
+                <input
+                  type="hidden"
+                  name="registrationDate"
+                  value="2025-08-02 16:29:00"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body-custom">
+        <!-- LEFT COLUMN -->
+        <div class="form-panel">
+          <div class="form-flex">
+            <div class="input-group honor-title">
+              <label>HONORIFIC TITLE <span class="req">*</span></label>
+              <div class="input-wrapper select-wrapper">
+                <i class="fa-regular fa-user leading-icon"></i>
+                <select required name="honorificTitle">
+                  <option value="" disabled selected>Select title</option>
+                  <option>Mr.</option>
+                  <option>Mrs.</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>PATIENT NAME <span class="req">*</span></label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-user leading-icon"></i>
+                <input
+                  type="text"
+                  placeholder="Enter patient full name"
+                  required
+                  name="patientName"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="input-group">
+              <label>AGE <span class="req">*</span></label>
+              <div
+                class="input-wrapper compound-input select-wrapper compound-wrapper"
+              >
+                <i class="fa-regular fa-calendar leading-icon"></i>
+                <input
+                  type="number"
+                  placeholder="Enter age"
+                  required
+                  name="patientAge"
+                />
+                <div class="divider"></div>
+                <select id="ageSelection" name="patientAgeType">
+                  <option>Years</option>
+                  <option>Months</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>DOB <span class="req">*</span></label>
+              <div
+                class="input-wrapper compound-input select-wrapper compound-wrapper"
+              >
+                <i class="fa-regular fa-calendar leading-icon"></i>
+                <input
+                  type="date"
+                  placeholder="Enter DOB"
+                  required
+                  name="patientAge"
+                />
+                <!-- <div class="divider"></div>
+                  <select id="ageSelection" name="patientAgeType" >
+                    <option>Years</option>
+                    <option>Months</option>
+                  </select> -->
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>GENDER <span class="req">*</span></label>
+              <div class="input-wrapper select-wrapper">
+                <i class="fa-solid fa-user-group leading-icon"></i>
+                <select name="patientGender">
+                  <option value="" disabled selected>Select gender</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="input-group">
+              <label>PHONE NUMBER <span class="req">*</span></label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-phone leading-icon"></i>
+                <input
+                  type="tel"
+                  placeholder="Enter 10 digit mobile number"
+                  name="patientPhNum"
+                />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>EMAIL ADDRESS</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-envelope leading-icon"></i>
+                <input
+                  type="email"
+                  placeholder="Enter email address"
+                  name="patientEmail"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="input-group full-width">
+              <label>ADDRESS <span class="req">*</span></label>
+              <div class="input-wrapper textarea-wrapper">
+                <i class="fa-solid fa-location-dot leading-icon"></i>
+                <textarea
+                  placeholder="Enter full address"
+                  name="patientAddress"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-bottom: 0">
+            <div class="input-group">
+              <label>REFERRING DOCTOR <span class="req">*</span></label>
+              <div class="input-wrapper select-wrapper">
+                <i class="fa-regular fa-user leading-icon"></i>
+                <select name="refDoctor">
+                  <option value="" disabled selected>
+                    Search or select doctor
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>DEPARTMENT</label>
+              <div class="input-wrapper select-wrapper">
+                <i class="fa-regular fa-building leading-icon"></i>
+                <select name="department">
+                  <option value="" disabled selected>Select department</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="form-panel">
+          <div class="form-row full-width">
+            <div class="input-group full-width">
+              <label>SAMPLE TYPE <span class="req">*</span></label>
+              <div class="input-wrapper select-wrapper">
+                <i class="fa-solid fa-vial leading-icon"></i>
+                <select>
+                  <option value="" disabled selected>Select sample type</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row full-width">
+            <div class="input-group full-width">
+              <label>PRIORITY</label>
+              <div class="priority-selector">
+                <label class="priority-label">
+                  <input type="radio" name="priority" value="Routine" checked />
+                  <div class="pill-content routine-pill">
+                    <span class="dot dot-green"></span> ROUTINE
+                  </div>
+                </label>
+                <label class="priority-label">
+                  <input type="radio" name="priority" value="Urgent" />
+                  <div class="pill-content urgent-pill">
+                    <span class="dot dot-yellow"></span> URGENT
+                  </div>
+                </label>
+                <label class="priority-label">
+                  <input type="radio" name="priority" value="STAT" />
+                  <div class="pill-content stat-pill">
+                    <span class="dot dot-red"></span> STAT
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row full-width">
+            <div class="input-group full-width">
+              <label>COLLECTION CENTER</label>
+              <div class="input-wrapper select-wrapper">
+                <i class="fa-regular fa-hospital leading-icon"></i>
+                <select>
+                  <option value="" disabled selected>Select center</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row full-width">
+            <div class="input-group full-width">
+              <label>SOURCE / REFERRED BY</label>
+              <div class="input-wrapper select-wrapper">
+                <i class="fa-regular fa-user leading-icon"></i>
+                <select>
+                  <option value="" disabled selected>Select source</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row full-width" style="margin-bottom: 0">
+            <div class="input-group full-width">
+              <label>NOTES (OPTIONAL)</label>
+              <div class="input-wrapper textarea-wrapper">
+                <textarea placeholder="Add any additional notes"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="modal-footer-custom">
+          <div class="footer-left">
+            <div class="qr-block">
+              Using standard real QR code placeholder link
+              <img
+                src="https://api.qrserver.com/v1/create-qr-code/?size=50x50&data=PT-2025-0715&color=1b4332&bgcolor=ffffff"
+                alt="QR Code"
+                class="qr-img"
+              />
+              <div class="qr-text">
+                <strong>SCAN / BARCODE</strong>
+                <span>Barcode will be generated<br />after registration</span>
+              </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="barcode-block">
+              <div class="barcode-icon">
+                <i class="fa-solid fa-barcode"></i>
+              </div>
+              <div class="barcode-text">
+                <strong>Auto-generate on save</strong>
+                <span>Unique barcode for this record</span>
+              </div>
+            </div>
+          </div> -->
+
+      <div class="footer-actions">
+        <button
+          type="button"
+          class="btn-cancel"
+          onclick="closeRegistrationModal()"
+        >
+          <i class="fa-solid fa-xmark" style="margin-right: 0.3em"></i>
+          CANCEL
+        </button>
+        <button type="submit" class="btn-register">
+          <i class="fa-regular fa-circle-check"></i> REGISTER PATIENT
+        </button>
+      </div>
+
+      <!-- <div class="security-note">
+          <i class="fa-solid fa-lock"></i> All patient information is secure and
+          confidential
+          <i
+            class="fa-solid fa-leaf"
+            style="color: #a2bbae; font-size: 0.85em"
+          ></i>
+        </div> -->
+    </form>
+  </div>
+  <script>
+    const modalOverlay = document.getElementById("regModalOverlay");
+    const modalContainer = document.getElementById("regModalContainer");
+
+    function openRegistrationModal() {
+      modalOverlay.classList.add("show");
+      modalContainer.classList.add("show");
+    }
+
+    function closeRegistrationModal() {
+      modalOverlay.classList.remove("show");
+      modalContainer.classList.remove("show");
+    }
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        closeRegistrationModal();
+      }
+    });
+  </script>
+  {% endblock %}
+</div>

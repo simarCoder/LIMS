@@ -16,7 +16,7 @@
     />
 
     <link rel="stylesheet" href="/static/css/style.css" />
-    {%block link%} {%endblock%}
+    {%block style%} {%endblock%}
   </head>
   <body>
     <nav class="side-nav1">
@@ -47,6 +47,11 @@
           class="trav-el {% if active_page == 'collectionDetails' %}active{% endif %}"
         >
           <i class="fa-solid fa-truck-medical"></i> Collection
+        </div>
+        <div
+          class="trav-el {% if active_page == 'collectionDetails' %}active{% endif %}"
+        >
+          <i class="fa-solid fa-microscope"></i> Tests Settings
         </div>
         <!-- </a> -->
         <!-- <a href="{{ url_for('settings') }}"> -->

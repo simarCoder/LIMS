@@ -43,13 +43,12 @@ def get_all_patients():
         with conn.cursor() as cursor:
             cursor.execute("""
                 SELECT patient_id, honorific_title, patient_name, 
-                       patient_age, patient_age_type, patient_gender, patient_phone
+                       patient_age, patient_age_type, patient_gender, patient_phone, TO_CHAR(patient_created_at, 'DD Mon YYYY, HH12:MI AM') AS patient_created_at, machine_id
                 FROM patients 
-                ORDER BY patient_id DESC
+                ORDER BY patient_id ASC
             """)
             
             # Convert rows to dictionaries so they are easy to use in Jinja2 HTML templates
             columns = [col.name for col in cursor.description]
             patients = [dict(zip(columns, row)) for row in cursor.fetchall()]
-            
             return patients
