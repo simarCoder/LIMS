@@ -48,11 +48,14 @@
         >
           <i class="fa-solid fa-truck-medical"></i> Collection
         </div>
-        <div
-          class="trav-el {% if active_page == 'collectionDetails' %}active{% endif %}"
+        <a href="{{ url_for('main.dashboard') }}"
+          ><div
+            class="trav-el {% if active_page == 'test_details' %}active{% endif %}"
+          >
+            <i class="fa-solid fa-microscope"></i> Tests Settings
+          </div></a
         >
-          <i class="fa-solid fa-microscope"></i> Tests Settings
-        </div>
+
         <!-- </a> -->
         <!-- <a href="{{ url_for('settings') }}"> -->
         <div
